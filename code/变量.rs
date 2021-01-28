@@ -19,12 +19,17 @@ fn main() {
 
     // 不可变
     let unmut_num = 1024;
-    unmut_num = 404; // 失败
+    // unmut_num = 404; // 失败
 
     // 可变
     let mut mut_num = 1024;
     mut_num = 404; // 成功
-    mut_num = true; // 失败
+    // mut_num = true; // 失败
 
-
+    let a_string: String = format!("a_string");
+    let a_string_borrow = &a_string;
+    let ref a_string_ref = a_string;
+    println!("{}", a_string);
+    assert_eq!(a_string_borrow, a_string_ref);
+    println!("{}, {}", a_string_borrow, a_string_ref);
 }

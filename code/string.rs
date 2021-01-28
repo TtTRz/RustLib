@@ -37,6 +37,13 @@ fn main() {
     }
 
     let bool_string_split: Vec<_> = bool_string.split("").collect();
-
     println!("bool_string_split: {:?}", bool_string_split); // ["", "t", "r", "u", "e", ""]
+
+    let bool_string_map = bool_string.chars().map(|x| x.to_string() + "end");
+    println!("{:?}", bool_string_map);
+    for i in bool_string_map { 
+        println!("{}", i);
+    }
+
+    
 }

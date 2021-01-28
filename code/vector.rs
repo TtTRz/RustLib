@@ -32,4 +32,6 @@ fn main() {
         *x += 1;
     }
     println!("{:?}", a_vec);
+
+    
 }
