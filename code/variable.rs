@@ -29,6 +29,8 @@ fn main() {
     let a_string: String = format!("a_string");
     let a_string_borrow = &a_string;
     let ref a_string_ref = a_string;
+
+    
     println!("{}", a_string);
     assert_eq!(a_string_borrow, a_string_ref);
     println!("{}, {}", a_string_borrow, a_string_ref);
