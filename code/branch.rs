@@ -1,5 +1,15 @@
 // branch
 
+enum Sex {
+    Male,
+    Female,
+}
+
+struct Person {
+    name: String,
+    sex: Sex,
+}
+
 fn main() {
     // if
     let mut a = 1;
@@ -14,21 +24,24 @@ fn main() {
     println!("b: {}", b);
 
     // match
-    match a {
-        1 => println!(" a == 1: {}", true),
-        _ => println!(" a == 1: {}", false),
-    }
-    b = match a {
-        1 => {
-            println!(" a == 1: {}", true);
-            true
-        }
-        _ => {
-            println!(" a == 1: {}", false);
-            false
-        }
+    let male = Person {
+        name: format!("Rom"),
+        sex: Sex::Male,
     };
-    println!("a == 1: {}", b);
+    let female = Person {
+        name: format!("Yuki"),
+        sex: Sex::Female,
+    };
+
+    match male.sex {
+        Sex::Male => println!("{} is male !", male.name),
+        Sex::Female => println!("{} is female", male.name),
+    }
+
+    match female.sex {
+        Sex::Male => println!("{} is male !", female.name),
+        Sex::Female => println!("{} is female", female.name),
+    }
 
     // for
     let mut arr = [1, 2, 3, 4, 5];
