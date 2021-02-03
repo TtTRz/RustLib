@@ -3,15 +3,15 @@
 fn main() {
     // if
     let mut a = 1;
-    if (a == 1) {
+    if a == 1 {
         println!(" a == 1: {}", true);
     } else {
         println!(" a == 1: {}", false);
     }
 
     let mut b = false;
-    b = if (a == 1) { true } else { false };
-    println!("a == 1: {}", b);
+    b = if a == 1 { true } else { false };
+    println!("b: {}", b);
 
     // match
     match a {
@@ -47,15 +47,17 @@ fn main() {
     }
 
     // while
-    while (a != 10) {
+    while a != 10 {
         a += 1;
+        println!("while (a = {})", a);
     }
+
     println!("{}", a);
     // loop
 
     loop {
         a += 1;
-        if (a == 20) {
+        if a == 20 {
             print!("{}", a);
             break;
         }
