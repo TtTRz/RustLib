@@ -18,7 +18,7 @@ fn main() {
     println!("{}", first_name_string);
     println!("{}", last_name_none_string);
     println!("{}", first_name.unwrap());
-
+    
     println!("{}", last_name_none.unwrap_or(format!("default_name")));
 
     // println!("{}", last_name_none.expect("last_name is missing")); // panic with error
