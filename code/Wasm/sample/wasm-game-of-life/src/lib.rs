@@ -46,7 +46,6 @@ impl Universe {
         count
     }
 }
-
 #[wasm_bindgen]
 impl Universe {
     pub fn tick(&mut self) {
@@ -56,7 +55,6 @@ impl Universe {
                 let idx = self.get_index(row, col);
                 let cell = self.cells[idx];
                 let live_neighbors = self.live_neighbor_count(row, col);
-
                 let next_cell = match (cell, live_neighbors) {
                     // 规则 1: 活细胞周围少于两个活细胞邻居的细胞，该细胞为死亡
                     (Cell::Alive, x) if x < 2 => Cell::Dead,

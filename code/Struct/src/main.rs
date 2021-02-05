@@ -19,20 +19,20 @@ impl Person {
 
 #[derive(Debug, Clone)]
 struct Student {
-  person: Person,
-  teacher: Person
+    person: Person,
+    teacher: Person,
 }
 
 impl Student {
-  fn new(name: &str, age: u8, teacher: Person) -> Self {
-    Self {
-      person: Person {
-        name: format!("{}", name),
-        age,
-      },
-      teacher
+    fn new(name: &str, age: u8, teacher: Person) -> Self {
+        Self {
+            person: Person {
+                name: format!("{}", name),
+                age,
+            },
+            teacher,
+        }
     }
-  }
 }
 
 fn main() {
