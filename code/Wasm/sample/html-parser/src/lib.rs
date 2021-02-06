@@ -1,7 +1,10 @@
 extern crate htmlstream;
 
-use wasm_bindgen::prelude::*;
+mod virtual_dom;
 
+use virtual_dom::{VD, VirtualDom};
+
+use wasm_bindgen::prelude::*;
 #[cfg(feature = "wee_alloc")]
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
@@ -20,10 +23,5 @@ extern "C" {
 
 #[wasm_bindgen]
 pub fn parse(html: &str) -> () {
-    for (pos, tag) in htmlstream::tag_iter(html) {
-        log(&format!("{:?} {:?}", pos, tag));
-        for (pos, attr) in htmlstream::attr_iter(&tag.attributes) {
-            log(&format!("{:?} {:?}", pos, attr));
-        }
-    }
+    let vd = VD::new();
 }

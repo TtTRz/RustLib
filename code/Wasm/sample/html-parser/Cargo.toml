@@ -17,6 +17,10 @@ wee_alloc = { version = "0.4.5", optional = true }
 regex = "1.4.3"
 htmlstream = "*"
 log = "*"
+serde="*"
+serde_json="*"
+serde_derive="*"
+
 [dev-dependencies]
 wasm-bindgen-test = "0.3.20"
 
