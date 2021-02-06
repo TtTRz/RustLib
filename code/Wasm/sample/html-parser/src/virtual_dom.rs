@@ -7,6 +7,7 @@ pub struct Node {
     inner_html: Option<String>,
     attributes: Vec<HashMap<String, String>>,
     node_type: NodeType,
+    children: Vec<NodeType>,
 }
 
 #[derive(Debug, Clone)]
@@ -30,18 +31,25 @@ impl Default for Node {
             inner_html: None,
             attributes: vec![],
             node_type: NodeType::None,
+            children: vec![],
         }
     }
 }
 #[derive(Debug)]
 pub struct Parser {
-    tag_state: HTMLTagState,
+    state: ParserState,
+}
+
+#[derive(Debug)]
+pub enum ParserState {
+    Closing,
+    Opening,
 }
 
 impl Default for Parser {
     fn default() -> Self {
         Self {
-            tag_state: HTMLTagState::Closing,
+            state: ParserState::Closing,
         }
     }
 }
@@ -68,16 +76,12 @@ impl VirtualDom for VD {
         Self { ..Self::default() }
     }
     fn parse_html(&mut self, html: &str) {
+        let root_node = Node::new();
         for (pos, tag) in htmlstream::tag_iter(html) {
-            match self.parser.tag_state {
-                // </div>
-                HTMLTagState::Closing => {}
-                // <div>
-                HTMLTagState::Opening => {}
-                // text
-                HTMLTagState::Text => {}
-                // <input />
-                HTMLTagState::SelfClosing => {}
+            let tag_state = tag.state;
+            match self.parser.state {
+                ParserState::Closing => {}
+                ParserState::Opening => {}
             }
             // tag.state
             // for (pos, attr) in htmlstream::attr_iter(&tag.attributes) {
