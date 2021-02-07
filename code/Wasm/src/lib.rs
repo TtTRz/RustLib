@@ -17,3 +17,4 @@ pub fn md5rust(name: &str) -> String {
     let result = md5::compute(name);
     format!("{:?}", result)
 }
+
