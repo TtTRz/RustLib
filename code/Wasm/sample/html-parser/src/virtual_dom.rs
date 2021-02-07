@@ -1,5 +1,6 @@
 use htmlstream::HTMLTagState;
 use std::collections::HashMap;
+use wasm_bindgen_test::__rt::node;
 
 #[derive(Debug, Clone)]
 pub struct Node {
@@ -21,6 +22,12 @@ pub enum NodeType {
 impl Node {
     fn new() -> Self {
         Self { ..Node::default() }
+    }
+    // TODO inner_html attrib children
+    fn init(&mut self, tag: Option<String>, node_type: NodeType) {
+        self.tag = tag;
+        // self.inner_html = inner_html;
+        self.node_type = node_type;
     }
 }
 
@@ -81,7 +88,14 @@ impl VirtualDom for VD {
             let tag_state = tag.state;
             match self.parser.state {
                 ParserState::Closing => {}
-                ParserState::Opening => {}
+                ParserState::Opening => {
+                    let mut node = Node::new();
+                    let node_type = match tag_state {
+                        HTMLTagState::Text => NodeType::TextNode,
+                        _ => NodeType::ElementNode,
+                    };
+                    node.init(Some(tag.name), node_type)
+                }
             }
             // tag.state
             // for (pos, attr) in htmlstream::attr_iter(&tag.attributes) {
