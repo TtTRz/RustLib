@@ -9,6 +9,9 @@ pub struct Node {
     attributes: Vec<HashMap<String, String>>,
     node_type: NodeType,
     children: Vec<NodeType>,
+    // TODO RC
+    parent: Box<Option<Node>>,
+    root: Box<Option<Node>>,
 }
 
 #[derive(Debug, Clone)]
@@ -39,6 +42,8 @@ impl Default for Node {
             attributes: vec![],
             node_type: NodeType::None,
             children: vec![],
+            parent: Box::new(None),
+            root: Box::new(None),
         }
     }
 }
@@ -84,13 +89,13 @@ impl VirtualDom for VD {
     }
     fn parse_html(&mut self, html: &str) {
         let root_node = Node::new();
+        // root_node.set_root = 
         for (pos, tag) in htmlstream::tag_iter(html) {
-            let tag_state = tag.state;
             match self.parser.state {
                 ParserState::Closing => {}
                 ParserState::Opening => {
                     let mut node = Node::new();
-                    let node_type = match tag_state {
+                    let node_type = match tag.state {
                         HTMLTagState::Text => NodeType::TextNode,
                         _ => NodeType::ElementNode,
                     };
