@@ -1,7 +1,6 @@
-use std::{
-    io::Lines,
-    rc::{Rc, Weak},
-};
+use std::{rc::{Rc, Weak}};
+use std::cell::RefCell;
+
 fn main() {
     let name = Rc::new(format!("Rom"));
     let name_rc = Rc::clone(&name);
@@ -18,64 +17,84 @@ fn main() {
     // Weak -> Rc
     println!("{:?}", name_weak.upgrade());
 
-    // LinkedList
-    let mut ll = LinkedList::new().append(1).append(2);
-    // ll.append(1);
-    // ll.append(2);
-    println!("{:?}", ll);
+  // LinkedList
+  let mut list = LinkedList::new();
+  // append_front
+  list.append_front(1);
+  list.append_front(2);
+  println!("{:?}", list);
+  //append_end
+
+  // DbLinkedList
+  let mut dblist = DbLinkedList::new();
+  dblist.append(1);
+  dblist.append(2);
+  println!("{:?}", dblist);
+
 }
 
 #[derive(Debug)]
 struct LinkedList<T> {
-    head: Option<Rc<LinkedListNode<T>>>,
+  head: Option<Rc<Node<T>>>
 }
 #[derive(Debug)]
-struct Node<T> {
-    data: T,
-    next: Option<Rc<Node<T>>>,
+pub struct Node<T> {
+  data: T,
+  next: Option<Rc<Node<T>>>,
+}
+impl <T> LinkedList<T> {
+  fn new() -> Self {
+    LinkedList {
+      head: None,
+    }
+  }
+  fn append_front(&mut self, data: T) {
+    let front_node = Rc::new(Node {
+      data,
+      next: self.head.take(),
+    });
+    self.head = Some(front_node.clone())
+  }
+  // TODO push_end
 }
 
 #[derive(Debug)]
-struct LinkedListNode<T> {
-    data: T,
-    next: Option<Rc<LinkedListNode<T>>>,
-    prev: Option<Weak<LinkedListNode<T>>>,
+struct DbLinkedList<T> {
+  head: Option<Rc<RefCell<DbNode<T>>>>,
+}
+#[derive(Debug)]
+struct DbNode<T> {
+  data: T,
+  next: Option<Rc<RefCell<DbNode<T>>>>,
+  prev: Option<Weak<RefCell<DbNode<T>>>>
 }
 
-impl<T> LinkedList<T> {
-    fn new() -> Self {
-        Self { head: None }
+impl<T> DbLinkedList<T> {
+  fn new() -> Self{
+    DbLinkedList {
+      head: None,
     }
-
-    // fn append(&self, data: T) -> Self {
-    //     LinkedList {
-    //         head: Some(Rc::new(Node {
-    //             data: data,
-    //             next: self.head.clone(),
-    //         })),
-    //     }
-    //     // let node = Rc::new(Node {
-    //     //     data: data,
-    //     //     next: self.head.clone(),
-    //     // });
-    //     // self.head = Some(node);
-    //     // self
-    // }
-
-    fn append(&mut self, data: T) -> Self {
-        let new_node = Rc::new(LinkedListNode {
-            data: data,
-            next: self.head.clone(),
-            prev: None,
-        });
-        match self.head.clone() {
-            Some(node) => {
-                node.prev = Some(Rc::downgrade(&new_node));
-            }
-            None => {}
-        }
-        LinkedList {
-            head: Some(new_node),
-        }
+  }
+  
+  fn append(&mut self, data: T) {
+    match self.head.take() {
+      Some(head_node) => {
+        let node = Rc::new(RefCell::new(DbNode {
+          data,
+          next: Some(head_node.clone()),
+          prev: None,
+        }));
+        let mut m = head_node.borrow_mut();
+        m.prev = Some(Rc::downgrade(&node));
+        self.head = Some(node)
+      },
+      None => {
+        self.head = Some(Rc::new(RefCell::new(DbNode {
+          data,
+          next: None,
+          prev: None,
+        })))
+      },
     }
+  }
 }
