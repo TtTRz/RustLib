@@ -22,4 +22,24 @@ fn main() {
     println!("{}", last_name_none.unwrap_or(format!("default_name")));
 
     // println!("{}", last_name_none.expect("last_name is missing")); // panic with error
+
+    let mut person_name: Option<String> = Some("rom".into());
+
+    {
+        let b = person_name.as_mut().unwrap();
+        *b = "hello".into();
+    }
+    println!("{:?}", person_name);
+
+    let mut rom_name: Option<String> = Some("rom".into());
+    let m = rom_name.take();
+    println!("{:?}", rom_name); // None
 }
+
+// Option::unwrap
+// Option::take
+// Option::as_ref
+// Option::as_mut
+// Option::is_none
+// Option::is_some
+// Option::contains

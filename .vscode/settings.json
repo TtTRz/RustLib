@@ -1,5 +1,7 @@
 {
   "cSpell.words": [
+    "bindgen",
     "struct"
-  ]
+  ],
+  "rust-analyzer.inlayHints.enable": false
 }
