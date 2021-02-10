@@ -29,11 +29,20 @@ fn main() {
         let b = person_name.as_mut().unwrap();
         *b = "hello".into();
     }
+
     println!("{:?}", person_name);
 
     let mut rom_name: Option<String> = Some("rom".into());
     let m = rom_name.take();
     println!("{:?}", rom_name); // None
+    let mut unwrap_name: Option<String> = Some("rom".into());
+    // let un = unwrap_name.unwrap();
+    // println!("{:?}, {:?}", unwrap_name, un); // unwrap_name moved due to this method call
+
+    let unm = unwrap_name.as_mut().unwrap();
+    *unm = "lll".into();
+    let un = unwrap_name.as_ref().unwrap();
+    println!("{:?}, {:?}", unwrap_name, un);
 }
 
 // Option::unwrap
