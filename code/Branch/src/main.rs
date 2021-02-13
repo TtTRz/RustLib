@@ -61,9 +61,7 @@ fn main() {
     let op: Option<String> = Some("rom".into());
 
     match op {
-        Some(ref h) => {
-          
-        }
+        Some(ref h) => {}
         None => {}
     }
 
@@ -94,11 +92,14 @@ fn main() {
     println!("{}", a);
     // loop
 
-    loop {
+    'outer: loop {
         a += 1;
-        if a == 20 {
-            print!("{}", a);
-            break;
+        'inner: loop {
+            a += 1;
+            if a >= 20 {
+                print!("{}", a);
+                break 'outer;
+            }
         }
     }
 }
