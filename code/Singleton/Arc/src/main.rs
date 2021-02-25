@@ -26,6 +26,11 @@ fn main() {
     for _ in 0..10 {
         let singleton = Arc::clone(&singleton);
         let handle = thread::spawn(move || {
+            // let count = singleton.lock().unwrap().count.as_ref();
+            // match count {
+            //     Some(c) => *c.lock().unwrap() += 1,
+            //     None => singleton.lock().unwrap().count = Some(Arc::new(Mutex::new(10))),
+            // }
             if singleton.lock().unwrap().count.is_none() {
                 singleton.lock().unwrap().count = Some(Arc::new(Mutex::new(10)));
             } else {
