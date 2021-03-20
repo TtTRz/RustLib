@@ -1,0 +1,1 @@
+/Users/romchung/Desktop/RustDoc/code/Trait/target/debug/Trait: /Users/romchung/Desktop/RustDoc/code/Trait/src/main.rs /Users/romchung/Desktop/RustDoc/code/Trait/src/person/mod.rs /Users/romchung/Desktop/RustDoc/code/Trait/src/person/person.rs
