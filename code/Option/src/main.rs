@@ -29,6 +29,10 @@ fn main() {
         let b = person_name.as_mut().unwrap();
         *b = "hello".into();
     }
+    {
+        let b = person_name.as_ref().unwrap();
+        println!("{}", b);
+    }
 
     println!("{:?}", person_name);
 
